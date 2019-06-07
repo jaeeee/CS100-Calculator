@@ -18,6 +18,26 @@
 
 using namespace std;
 
+// TEST(CountVisitorTest, OneOpTest) {
+// 	Base* op2 = new Sub(new Op(10), new Op(20));
+// 	Base * op4 = new Add(op2, new Op(30));
+// 	Base* dummy4 = new Add(op4,op2);
+// 	CountVisitor * cv3 = new CountVisitor();
+// 	PreorderIterator *pi3 = new PreorderIterator(dummy4);
+// 	pi3->first();
+// 	while(pi3->is_done() == false){
+// 	    pi3->current()->accept(cv3);
+// 	    pi3->next();
+// 	}
+// 	// EXPECT_EQ(cv->sub_count(), 1);
+// 	// EXPECT_EQ(cv->abs_count(), 1);
+// 	// EXPECT_EQ(cv->floor_count(), 1);
+// 	// EXPECT_EQ(cv->div_count(), 1);
+// 	// EXPECT_EQ(cv->paren_count(), 1);
+// 	EXPECT_EQ(cv3->op_count(), 3);
+// }
+
+
 TEST(CountVisitorTest, MainTestOnlyOneWeNeedIThink) {
 	Base* op2 = new Sub( new Trunc(new Abs(new Op(-4))), new Floor(new Op(1.432)));
 	Base* op4 = new Pow(new Div( new Paren(new Op(6)), (new Add(new Op(3), new Ceil(new Op(1))))), new Op(2));
@@ -30,10 +50,11 @@ TEST(CountVisitorTest, MainTestOnlyOneWeNeedIThink) {
 	    pi->current()->accept(cv);
 	    pi->next();
 	}
+
+	EXPECT_EQ(cv->div_count(), 1);
 	EXPECT_EQ(cv->sub_count(), 1);
 	EXPECT_EQ(cv->abs_count(), 1);
 	EXPECT_EQ(cv->floor_count(), 1);
-	EXPECT_EQ(cv->div_count(), 1);
 	EXPECT_EQ(cv->paren_count(), 1);
 	EXPECT_EQ(cv->trunc_count(), 1);
 	EXPECT_EQ(cv->add_count(), 1);
