@@ -17,6 +17,7 @@
 #include <cmath>
 
 using namespace std;
+
 // TEST(CountVisitorTest, OneOpTest) {
 // 	Base* op2 = new Sub(new Op(10), new Op(20));
 // 	Base * op4 = new Add(op2, new Op(30));
@@ -54,7 +55,6 @@ TEST(CountVisitorTest, MainTestOnlyOneWeNeedIThink) {
 	EXPECT_EQ(cv->sub_count(), 1);
 	EXPECT_EQ(cv->abs_count(), 1);
 	EXPECT_EQ(cv->floor_count(), 1);
-	EXPECT_EQ(cv->div_count(), 1);
 	EXPECT_EQ(cv->paren_count(), 1);
 	EXPECT_EQ(cv->op_count(), 4);
 }
