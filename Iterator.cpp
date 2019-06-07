@@ -120,11 +120,10 @@ TODO
 
   void PreorderIterator::first() {
       // Empty the stack (just in case we had something leftover from another run).
-       if (stackerino.empty() == true) {
-         while (stackerino.top() != NULL) {
+        while (!stackerino.empty()) {
            stackerino.pop();
          }
-      } //TODO PLEASE FINISH
+      //TODO PLEASE FINISH
       // Create an iterator for the Base* that was passed into the PreorderIterator constructor.
       // Initialize that iterator and push it onto the stack.
       Iterator * temp = self_ptr->create_iterator();
