@@ -8,8 +8,10 @@
 #include <iomanip>
 #include <sstream>
 #include "Iterator.hpp"
+#include "visitor.hpp"
 
 class Iterator;
+class CountVisitor;
 // class NullIterator;
 // class UnaryIterator;
 // class BinaryIterator;
@@ -27,6 +29,7 @@ class Base {
         virtual Base* get_left() = 0;
         virtual Base* get_right() = 0;
         virtual Iterator* create_iterator() = 0;
+        virtual void accept(CountVisitor*) = 0;
 };
 
 class Op : public Base {
@@ -62,6 +65,12 @@ public:
     Iterator* it = new NullIterator(this);
     return it;
   }
+
+  void accept(CountVisitor* a) {
+    a->visit_op();
+  }
+
+
 };
 
 class Rand : public Base {
@@ -94,6 +103,10 @@ public:
   Iterator* create_iterator() {
     Iterator* it = new NullIterator(this);
     return it;
+  }
+
+  void accept(CountVisitor* a) {
+    a->visit_rand();
   }
 };
 
@@ -128,6 +141,10 @@ public:
       Iterator* it = new BinaryIterator(this);
       return it;
     }
+
+    void accept(CountVisitor* a) {
+      a->visit_mult();
+    }
 };
 
 class Div : public Base {
@@ -160,6 +177,10 @@ public:
 
     Iterator* create_iterator() {
       return new BinaryIterator(this);
+    }
+
+    void accept(CountVisitor* a) {
+      a->visit_div();
     }
 };
 
@@ -196,6 +217,10 @@ public:
   Iterator* create_iterator() {
     return new BinaryIterator(this);
   }
+
+  void accept(CountVisitor* a) {
+    a->visit_add();
+  }
 };
 
 class Sub : public Base {
@@ -228,6 +253,10 @@ public:
 
   Iterator* create_iterator() {
     return new BinaryIterator(this);
+  }
+
+  void accept(CountVisitor* a) {
+    a->visit_sub();
   }
 };
 
@@ -263,6 +292,10 @@ public:
   Iterator* create_iterator() {
     return new BinaryIterator(this);
   }
+
+  void accept(CountVisitor* a) {
+    a->visit_pow();
+  }
 };
 
 class Trunc : public Base {
@@ -297,6 +330,10 @@ public:
     return new UnaryIterator(this);
   }
 
+  void accept(CountVisitor* a) {
+    a->visit_trunc();
+  }
+
 };
 
 class Paren : public Base {
@@ -329,6 +366,9 @@ public:
     return new UnaryIterator(this);
   }
 
+  void accept(CountVisitor* a) {
+    a->visit_paren();
+  }
 };
 
 class Ceil : public Base {
@@ -361,6 +401,10 @@ public:
 
   Iterator* create_iterator() {
     return new UnaryIterator(this);
+  }
+
+  void accept(CountVisitor* a) {
+    a->visit_ceil();
   }
 };
 
@@ -396,6 +440,10 @@ public:
     return new UnaryIterator(this);
   }
 
+  void accept(CountVisitor* a) {
+    a->visit_floor();
+  }
+
 };
 
 class Abs : public Base {
@@ -427,6 +475,10 @@ public:
 
   Iterator* create_iterator() {
     return new UnaryIterator(this);
+  }
+
+  void accept(CountVisitor* a) {
+    a->visit_abs();
   }
 };
 
