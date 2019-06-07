@@ -23,7 +23,9 @@ class CountVisitor{
         int paren;
 
     public:
-        CountVisitor();
+        CountVisitor() {
+          // cout << "BRO" << endl;
+        };
 
         void visit_op() {
           ops++;
