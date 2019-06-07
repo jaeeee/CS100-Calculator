@@ -173,7 +173,7 @@ public:
   PreorderIterator();
   PreorderIterator(Base *a);
   // Base* curr;
-  // Iterator* itPtr;
+  Iterator* itPtr;
   //
   void first();
   void next();

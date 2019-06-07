@@ -34,7 +34,7 @@ BINARYITERATOR IMPLEMENTATION
 
   /* Returns if you have finished iterating through all elements */
   bool BinaryIterator::is_done() {
-  if (root == nullptr || root == self_ptr->get_right()) {
+  if (root == nullptr) {
     return true;
   } else {
     return false;
@@ -68,7 +68,7 @@ root = nullptr; //cycle to nothing
 
 /* Returns if you have finished iterating through all elements */
 bool UnaryIterator::is_done() {
-  if (root == nullptr || root == self_ptr->get_left()) {
+  if (root == nullptr) {
     return true;
   } else {
   return false;
@@ -126,50 +126,35 @@ TODO
       //TODO PLEASE FINISH
       // Create an iterator for the Base* that was passed into the PreorderIterator constructor.
       // Initialize that iterator and push it onto the stack.
-      Iterator * temp = self_ptr->create_iterator();
-      temp->first();
-      stackerino.push(temp);
+      // Iterator * temp = self_ptr->create_iterator();
+      // temp->first();
+      itPtr = self_ptr->create_iterator();
+      itPtr->first();
+      stackerino.push(itPtr);
   }
 
   void PreorderIterator::next() {
-      // Create an iterator for the current() of the iterator on the top of the stack
-      // Initialize the iterator and push it onto the stack. As long as the top iterator
-      // on the stack is_done, pop it off the stack and then advance whatever iterator is
-      // now on top of the stack
+// Create an iterator for the current() of the iterator on the top of the stack
+// Initialize the iterator and push it onto the stack. As long as the top iterator
+// on the stack is_done, pop it off the stack and then advance whatever iterator is
+// now on top of the stack
+    root = current();
 
-      // Iterator *temp = s.top()->current()->create_iterator();
-      //   temp->first();
-      //   s.push(temp);
-      //
-      //   while(s.top()->is_done()){
-    	// s.pop();
-    	// if(s.size() == 0)
-    	//     break;
-      //
-    	// s.top()->next();
-      //   }
+    itPtr = stackerino.top()->current()->create_iterator();
 
-      Iterator *temp = stackerino.top()->current()->create_iterator();
-      temp->first();
-      stackerino.push(temp);
-      while(stackerino.top()->is_done()) {
+    itPtr->first();
+
+    stackerino.push(itPtr);
+
+    while(!stackerino.empty() && stackerino.top()->is_done()) {
         stackerino.pop();
-        if(stackerino.size() == 0)
-        break;
-        stackerino.top()->next();
-      }
+        if(!stackerino.empty()) {
+          stackerino.top()->next();
+        }
 
-      //
-      // root = current();
-      //
-      // Iterator * temp = stackerino.top()->current()->create_iterator();
-      // stackerino.push(temp);
-      //
-      // while (is_done() == false) {
-      //   stackerino.pop();
-      //   root = current();
-      // }
-  }
+    }
+
+}
 
   bool PreorderIterator::is_done() {
     if (stackerino.empty()) {
@@ -181,6 +166,7 @@ TODO
   }
 
   Base* PreorderIterator::current() {
+    root = stackerino.top()->current();
       // Return the current for the top iterator in the stack
-      return stackerino.top()->current();
+      return root;
   }
